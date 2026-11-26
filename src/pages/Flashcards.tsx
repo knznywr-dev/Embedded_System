@@ -117,36 +117,36 @@ export function FlashcardsPage() {
   });
 
   return (
-    <div className="page flashcards-page">
+    <div className=”page flashcards-page animate-page-enter”>
       <PageHeader
         eyebrow={
           <>
-            <Icon name="cards" size={14} /> Active recall
+            <Icon name=”cards” size={14} /> Active recall
           </>
         }
-        title="Flashcards"
-        description="Flip each card, then mark it “Know it” or “Review again”. Your marks are saved in this browser and drive the counts on the dashboard and progress page."
+        title=”Flashcards”
+        description=”Flip each card, then mark it “Know it” or “Review again”. Your marks are saved in this browser and drive the counts on the dashboard and progress page.”
         actions={
           <>
             <button
-              type="button"
-              className="btn btn-secondary"
+              type=”button”
+              className=”btn btn-secondary”
               onClick={() => {
                 setOrder(shuffleIds(FLASHCARDS.map((item) => item.id)));
                 setIndex(0);
                 setFlipped(false);
               }}
             >
-              <Icon name="shuffle" size={16} /> Shuffle
+              <Icon name=”shuffle” size={16} /> Shuffle
             </button>
-            <Link className="btn btn-primary" to="/quiz?scope=mixed">
-              <Icon name="quiz" size={16} /> Quiz me
+            <Link className=”btn btn-primary” to=”/quiz?scope=mixed”>
+              <Icon name=”quiz” size={16} /> Quiz me
             </Link>
           </>
         }
       />
 
-      <div className="flashcard-stats">
+      <div className=”flashcard-stats animate-content-reveal stagger-1”>
         <div className="flashcard-stat">
           <span>Known</span>
           <strong>{known}</strong>
@@ -174,7 +174,7 @@ export function FlashcardsPage() {
         </div>
       </div>
 
-      <Card className="flashcard-controls">
+      <Card className="flashcard-controls animate-content-reveal stagger-2">
         <div className="flashcard-filter-row">
           <label className="field compact-field">
             <span className="field-label">Module</span>
@@ -243,6 +243,7 @@ export function FlashcardsPage() {
         </EmptyState>
       ) : (
         <>
+          <div className="flashcard-stage animate-content-reveal stagger-3">
           <div className="flashcard-stage">
             <button
               type="button"

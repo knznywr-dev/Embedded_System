@@ -28,8 +28,8 @@ export function DashboardPage() {
   const lastAttempt = summary.lastAttempt;
 
   return (
-    <div className="page dashboard-page">
-      <section className="hero">
+    <div className="page dashboard-page animate-page-enter">
+      <section className="hero animate-content-reveal stagger-1">
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="hero-dot" /> BSCpE 4 · Final Examination
@@ -71,7 +71,7 @@ export function DashboardPage() {
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
-          <div className="hero-chip">
+          <div className="hero-chip animate-float">
             <div className="hero-chip-top">
               <span className="hero-chip-pin-row">
                 {Array.from({ length: 8 }).map((_, index) => (
@@ -105,7 +105,7 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <section className="stats-grid" aria-label="Progress summary">
+      <section className="stats-grid animate-content-reveal stagger-2" aria-label="Progress summary">
         <StatCard
           label="Study units reviewed"
           value={
@@ -150,7 +150,7 @@ export function DashboardPage() {
         />
       </section>
 
-      <div className="dashboard-grid">
+      <div className="dashboard-grid animate-content-reveal stagger-3">
         <Card className="dashboard-modules">
           <div className="card-heading">
             <div>
@@ -215,7 +215,7 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <div className="dashboard-side">
+        <div className="dashboard-side animate-content-reveal stagger-4">
           <Card className="quick-access">
             <div className="card-heading compact">
               <div>
@@ -333,7 +333,7 @@ export function DashboardPage() {
         </div>
       </div>
 
-      <Card className="study-flow">
+      <Card className="study-flow animate-content-reveal stagger-5">
         <div className="card-heading">
           <div>
             <div className="eyebrow">A simple study loop</div>
@@ -371,7 +371,7 @@ export function DashboardPage() {
         </div>
       </Card>
 
-      <div className="dashboard-bottom-note">
+      <div className="dashboard-bottom-note animate-content-reveal stagger-6">
         <ProgressBar value={completed} max={totalModules} label="Study units reviewed" />
         <span>
           {completed === totalModules

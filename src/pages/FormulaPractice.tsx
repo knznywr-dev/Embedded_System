@@ -102,7 +102,7 @@ export function FormulaPracticePage() {
   };
 
   return (
-    <div className="page formulas-page">
+    <div className="page formulas-page animate-page-enter">
       <PageHeader
         eyebrow={
           <>
@@ -123,7 +123,7 @@ export function FormulaPracticePage() {
         }
       />
 
-      <Callout tone="important" title="Two ADC formulas, kept separate">
+      <Callout tone="important" title="Two ADC formulas, kept separate" className="animate-content-reveal stagger-1">
         <p>
           <strong>ADC Resolution (LSB) = Vref / 2^N</strong> is the ideal ADC formula. The Arduino
           Uno activity separately uses <strong>ADC Reading × (5.0 / 1023.0)</strong>. The reviewer
@@ -131,7 +131,7 @@ export function FormulaPracticePage() {
         </p>
       </Callout>
 
-      <div className="formula-layout">
+      <div className="formula-layout animate-content-reveal stagger-2">
         <aside className="formula-index">
           <div className="formula-index-head">
             <Icon name="list" size={15} /> Formula sheet
@@ -160,7 +160,7 @@ export function FormulaPracticePage() {
         </aside>
 
         <div className="formula-content">
-          <Card className="formula-sheet">
+          <Card className="formula-sheet animate-content-reveal stagger-3">
             <div className="card-heading">
               <div>
                 <div className="eyebrow">At a glance</div>
@@ -184,8 +184,8 @@ export function FormulaPracticePage() {
             </div>
           </Card>
 
-          {GROUPS.map((group) => (
-            <section className="formula-group" key={group}>
+          {GROUPS.map((group, groupIndex) => (
+            <section className="formula-group animate-content-reveal" key={group} style={{ animationDelay: `${(groupIndex + 1) * 100}ms` }}>
               <div className="formula-group-head">
                 <h2>{group}</h2>
                 <span>{GROUP_COPY[group]}</span>
@@ -223,7 +223,7 @@ export function FormulaPracticePage() {
             </section>
           ))}
 
-          <section className="formula-group">
+          <section className="formula-group animate-content-reveal stagger-4">
             <div className="formula-group-head">
               <h2>Integer division checkpoint</h2>
               <span>The reviewer’s programming reminder for the Arduino Uno ADC.</span>
@@ -233,7 +233,7 @@ export function FormulaPracticePage() {
             </Card>
           </section>
 
-          <section className="formula-group">
+          <section className="formula-group animate-content-reveal stagger-5">
             <div className="formula-group-head">
               <h2>Units to remember</h2>
               <span>Exactly as listed by the reviewer on p. 11.</span>
@@ -258,7 +258,7 @@ export function FormulaPracticePage() {
             </Card>
           </section>
 
-          <section className="formula-group">
+          <section className="formula-group animate-content-reveal stagger-6">
             <div className="formula-group-head">
               <h2>Common traps</h2>
               <span>Points the reviewer explicitly emphasizes.</span>

@@ -231,7 +231,7 @@ export function NotesPage() {
   const completed = progress.completedModules.length;
 
   return (
-    <div className="page notes-page">
+    <div className="page notes-page animate-page-enter">
       <PageHeader
         eyebrow={
           <>
@@ -252,7 +252,7 @@ export function NotesPage() {
         }
       />
 
-      <Card className="notes-controls">
+      <Card className="notes-controls animate-content-reveal stagger-1">
         <div className="module-tabs" role="tablist" aria-label="Filter notes by module">
           <button
             type="button"
@@ -306,7 +306,7 @@ export function NotesPage() {
         </div>
       </Card>
 
-      <div className="notes-layout">
+      <div className="notes-layout animate-content-reveal stagger-2">
         <div className="notes-content">
           {filteredSections.length === 0 ? (
             <Card>

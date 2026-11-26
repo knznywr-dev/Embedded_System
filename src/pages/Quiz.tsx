@@ -428,20 +428,19 @@ export function QuizPage() {
   };
 
   const checkCurrent = (question: Question) => {
-    if (!session) return;
-    const answer = session.answers.get(question.id) ?? null;
-    if (!isAnswerProvided(question, answer)) return;
-    const evaluation = evaluateAnswer(question, answer);
     setSession((currentSession) => {
       if (!currentSession) return currentSession;
+      const answer = currentSession.answers.get(question.id) ?? null;
+      if (!isAnswerProvided(question, answer)) return currentSession;
+      const evaluation = evaluateAnswer(question, answer);
       const evaluations = new Map(currentSession.evaluations);
       evaluations.set(question.id, evaluation);
       const checked = new Set(currentSession.checked);
       checked.add(question.id);
+      if (evaluation.correct) setFlash('Correct.');
+      else setFlash(`Not quite. ${question.explanation}`);
       return { ...currentSession, evaluations, checked };
     });
-    if (evaluation.correct) setFlash('Correct.');
-    else setFlash(`Not quite. ${question.explanation}`);
   };
 
   const resetToSetup = () => {
@@ -455,7 +454,7 @@ export function QuizPage() {
 
   if (phase === 'setup') {
     return (
-      <div className="page quiz-page">
+      <div className="page quiz-page animate-page-enter">
         <PageHeader
           eyebrow={
             <>
@@ -476,7 +475,7 @@ export function QuizPage() {
           }
         />
 
-        <div className="quiz-setup-grid">
+        <div className="quiz-setup-grid animate-content-reveal stagger-1">
           <Card className="quiz-config">
             <div className="card-heading">
               <div>
@@ -564,6 +563,7 @@ export function QuizPage() {
                   <input
                     type="radio"
                     name="feedback"
+                    value="end"
                     checked={feedback === 'end'}
                     onChange={() => setFeedback('end')}
                   />
@@ -576,6 +576,7 @@ export function QuizPage() {
                   <input
                     type="radio"
                     name="feedback"
+                    value="immediate"
                     checked={feedback === 'immediate'}
                     onChange={() => setFeedback('immediate')}
                   />
@@ -613,7 +614,7 @@ export function QuizPage() {
             </div>
           </Card>
 
-          <div className="quiz-setup-side">
+          <div className="quiz-setup-side animate-content-reveal stagger-2">
             <Card className="quiz-missed-card">
               <div className="card-heading compact">
                 <div>
@@ -717,8 +718,8 @@ export function QuizPage() {
     ).length;
 
     return (
-      <div className="page quiz-run-page">
-        <div className="quiz-run-head">
+      <div className="page quiz-run-page animate-page-enter">
+        <div className="quiz-run-head animate-content-reveal stagger-1">
           <button type="button" className="btn btn-ghost btn-small" onClick={resetToSetup}>
             <Icon name="close" size={15} /> Exit
           </button>
@@ -739,9 +740,10 @@ export function QuizPage() {
           value={answeredCount}
           max={session.questions.length}
           label="Questions answered"
+          className="animate-content-reveal stagger-2"
         />
 
-        <div className="quiz-run-grid">
+        <div className="quiz-run-grid animate-content-reveal stagger-3">
           <div className="quiz-question-column">
             <Card className="quiz-question-card">
               <div className="quiz-question-meta">
@@ -884,7 +886,7 @@ export function QuizPage() {
             ) : null}
           </div>
 
-          <aside className="quiz-palette" aria-label="Question navigation">
+          <aside className="quiz-palette animate-content-reveal stagger-4" aria-label="Question navigation">
             <div className="quiz-palette-head">
               <span>Questions</span>
               <span>{answeredCount} answered</span>
@@ -952,7 +954,7 @@ export function QuizPage() {
     }
 
     return (
-      <div className="page quiz-results-page">
+      <div className="page quiz-results-page animate-page-enter">
         <PageHeader
           eyebrow={
             <>
@@ -1028,7 +1030,7 @@ export function QuizPage() {
         </div>
 
         {attempt.missedTopics.length > 0 ? (
-          <Card className="results-breakdown">
+          <Card className="results-breakdown animate-content-reveal stagger-1">
             <div className="card-heading">
               <div>
                 <div className="eyebrow">Next steps</div>
@@ -1062,7 +1064,7 @@ export function QuizPage() {
           </Card>
         ) : null}
 
-        <Card className="results-by-module">
+        <Card className="results-by-module animate-content-reveal stagger-2">
           <div className="card-heading">
             <div>
               <div className="eyebrow">Breakdown</div>
@@ -1095,7 +1097,7 @@ export function QuizPage() {
           </div>
         </Card>
 
-        <Card className="results-review">
+        <Card className="results-review animate-content-reveal stagger-3">
           <div className="card-heading">
             <div>
               <div className="eyebrow">Every question</div>
@@ -1152,7 +1154,7 @@ export function QuizPage() {
           </div>
         </Card>
 
-        <Callout tone="info" title="Your attempt is saved">
+        <Callout tone="info" title="Your attempt is saved" className="animate-content-reveal stagger-4">
           <p>
             This attempt was added to your local quiz history. The Progress page shows your average,
             per-module accuracy, and the questions still marked as missed.
@@ -1163,7 +1165,7 @@ export function QuizPage() {
   }
 
   return (
-    <div className="page quiz-page">
+    <div className="page quiz-page animate-page-enter">
       <EmptyState
         icon="quiz"
         title="Quiz state unavailable"

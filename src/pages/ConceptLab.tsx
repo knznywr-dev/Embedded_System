@@ -180,7 +180,7 @@ export function ConceptLabPage() {
   };
 
   return (
-    <div className="page lab-page">
+    <div className="page lab-page animate-page-enter">
       <PageHeader
         eyebrow={
           <>
@@ -201,17 +201,17 @@ export function ConceptLabPage() {
         }
       />
 
-      <div className="lab-layout">
+      <div className="lab-layout animate-content-reveal stagger-1">
         <nav className="lab-nav" aria-label="Concept Lab sections">
           <div className="lab-nav-head">
             <Icon name="list" size={15} /> Demos
           </div>
-          {GROUPS.map((group) => (
-            <div className="lab-nav-group" key={group}>
+          {GROUPS.map((group, groupIndex) => (
+            <div className="lab-nav-group animate-content-reveal" key={group} style={{ animationDelay: `${(groupIndex + 1) * 100}ms` }}>
               <span>{group}</span>
               <ul>
-                {ENTRIES.filter((entry) => entry.group === group).map((entry) => (
-                  <li key={entry.id}>
+                {ENTRIES.filter((entry) => entry.group === group).map((entry, entryIndex) => (
+                  <li key={entry.id} style={{ animationDelay: `${entryIndex * 50}ms` }}>
                     <button type="button" onClick={() => scrollTo(entry.id)}>
                       <span className="lab-nav-letter">{entry.letter}</span>
                       {entry.title}
@@ -223,7 +223,7 @@ export function ConceptLabPage() {
           ))}
         </nav>
 
-        <div className="lab-content">
+        <div className="lab-content animate-content-reveal stagger-2">
           <Callout tone="info" title="How to use this lab">
             <p>
               Start with a demo that matches the module you are reading. Every interaction is

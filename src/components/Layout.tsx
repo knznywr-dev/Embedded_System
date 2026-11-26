@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigation } from 'react-router-dom';
 import { Icon, type IconName } from './Icon';
 import { GlobalSearch } from './GlobalSearch';
 import { ProgressBar } from './ui';
@@ -99,10 +99,13 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
 export function Layout({ children }: { children: ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const location = useLocation();
+  const navigation = useNavigation();
   const { setLastRoute } = useStudyData();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const pageTransitionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLastRoute(`${location.pathname}${location.hash}`);
@@ -111,6 +114,10 @@ export function Layout({ children }: { children: ReactNode }) {
   useEffect(() => {
     setDrawerOpen(false);
   }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    setIsNavigating(navigation.state === 'loading');
+  }, [navigation.state]);
 
   useEffect(() => {
     if (!drawerOpen) return;
@@ -187,8 +194,17 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
+        {/* Page transition progress bar */}
+        {isNavigating && (
+          <div className="page-transition-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-label="Page loading">
+            <div className="page-transition-bar-fill" />
+          </div>
+        )}
+
         <main id="main-content" className="main-content" tabIndex={-1}>
-          {children}
+          <div ref={pageTransitionRef} className="page-transition-wrapper animate-page-enter">
+            {children}
+          </div>
         </main>
 
         <footer className="site-footer">
@@ -218,7 +234,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="drawer-backdrop" role="presentation" onClick={() => setDrawerOpen(false)}>
           <div
             id="mobile-drawer"
-            className="drawer"
+            className="drawer animate-slide-in-right"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation"

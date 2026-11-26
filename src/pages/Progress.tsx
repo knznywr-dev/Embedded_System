@@ -66,7 +66,7 @@ export function ProgressPage() {
   const totalModules = MODULES.length;
 
   return (
-    <div className="page progress-page">
+    <div className="page progress-page animate-page-enter">
       <PageHeader
         eyebrow={
           <>
@@ -87,7 +87,7 @@ export function ProgressPage() {
         }
       />
 
-      <div className="progress-stats">
+      <div className="progress-stats animate-content-reveal stagger-1">
         <StatCard
           label="Study units reviewed"
           value={
@@ -128,7 +128,7 @@ export function ProgressPage() {
         />
       </div>
 
-      <div className="progress-grid">
+      <div className="progress-grid animate-content-reveal stagger-2">
         <Card className="progress-modules">
           <div className="card-heading">
             <div>
@@ -185,8 +185,8 @@ export function ProgressPage() {
           </div>
         </Card>
 
-        <div className="progress-side">
-          <Card>
+        <div className="progress-side animate-content-reveal stagger-3">
+          <Card className="animate-content-reveal stagger-4">
             <div className="card-heading compact">
               <div>
                 <div className="eyebrow">Focus</div>
@@ -264,8 +264,8 @@ export function ProgressPage() {
         </div>
       </div>
 
-      <div className="progress-lower">
-        <Card className="progress-history">
+      <div className="progress-lower animate-content-reveal stagger-5">
+        <Card className="progress-history animate-content-reveal stagger-6">
           <div className="card-heading">
             <div>
               <div className="eyebrow">History</div>
@@ -352,7 +352,7 @@ export function ProgressPage() {
           )}
         </Card>
 
-        <Card className="progress-missed">
+        <Card className="progress-missed animate-content-reveal stagger-7">
           <div className="card-heading">
             <div>
               <div className="eyebrow">Question bank</div>
@@ -410,7 +410,7 @@ export function ProgressPage() {
         </Card>
       </div>
 
-      <Callout tone="info" title="Where this data lives">
+      <Callout tone="info" title="Where this data lives" className="animate-content-reveal stagger-8">
         <p>
           Progress, flashcard marks, and quiz history are saved in this browser’s local storage.
           Nothing is uploaded. Clearing your browser data or using another device will not carry
@@ -418,7 +418,7 @@ export function ProgressPage() {
         </p>
       </Callout>
 
-      <Card className="danger-card">
+      <Card className="danger-card animate-content-reveal stagger-9">
         <div>
           <h3>Reset everything</h3>
           <p>
@@ -440,7 +440,7 @@ export function ProgressPage() {
       </Card>
 
       {summary.lastAttempt ? (
-        <div className="progress-last-line">
+        <div className="progress-last-line animate-content-reveal stagger-10">
           <span>
             Last attempt:{' '}
             <strong>
