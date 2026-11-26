@@ -79,17 +79,38 @@ async function main() {
   // Clear any previous study data before testing persistence.
   await goto('/progress');
   await evaluate(send, `localStorage.clear()`);
+  await send('Page.reload');
+  await wait(1200);
 
   // --- Quiz complete flow ---
   await goto('/quiz');
   await clickText('Start quiz');
   await wait(500);
   await check('quiz running has choices', async () => {
-    const count = await evaluate(send, `document.querySelectorAll('.choice').length`);
-    if (count < 2) throw new Error(`expected choices, got ${count}`);
-    return `${count} choices`;
+    const count = await evaluate(
+      send,
+      `document.querySelectorAll('.choice, .tf-button, .match-row select, .answer-field input').length`,
+    );
+    if (count < 1) throw new Error(`expected an answer control, got ${count}`);
+    return `${count} answer controls`;
   });
-  await evaluate(send, `document.querySelector('.choice').click()`);
+  await evaluate(
+    send,
+    `(() => {
+      const quick = document.querySelector('.choice, .tf-button');
+      if (quick) { quick.click(); return quick.className; }
+      const select = document.querySelector('.match-row select');
+      if (select) { select.selectedIndex = 1; select.dispatchEvent(new Event('change', { bubbles: true })); return 'match'; }
+      const input = document.querySelector('.answer-field input');
+      if (input) {
+        const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+        setter.call(input, '1');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        return 'input';
+      }
+      return 'none';
+    })()`,
+  );
   await wait(250);
   await check('quiz answer recorded', async () => {
     const value = await text('.quiz-run-score');
@@ -100,7 +121,7 @@ async function main() {
   await clickText('Finish quiz');
   await wait(350);
   await check('quiz finish prompt', async () => text('.quiz-finish-prompt'));
-  await clickText('Finish and see results');
+  await clickText('Finish anyway');
   await wait(700);
   await check('quiz results rendered', async () => {
     const h2 = await evaluate(
@@ -152,7 +173,7 @@ async function main() {
     if (headings.length < 3) throw new Error('missing m4b sections');
     return headings;
   });
-  await clickText('Mark module reviewed');
+  await clickText('Mark reviewed');
   await wait(300);
   await check('module completion persists', async () => {
     const raw = await evaluate(send, `localStorage.getItem('embedded-reviewer:v1:progress')`);

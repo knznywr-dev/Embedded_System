@@ -82,9 +82,11 @@ export function SmartLedSimulator() {
         </div>
 
         <div className="smartled-stage">
-          <div className={`smart-led ${indicator.animation}`}>
+          <div
+            className={`smart-led ${indicator.animation} led-${indicator.pin === 'D8' ? 'green' : indicator.pin === 'D9' ? 'yellow' : 'red'}`}
+          >
             <span className="smart-led-glow" />
-            <span className={`smart-led-bulb led-${indicator.pin === 'D8' ? 'green' : indicator.pin === 'D9' ? 'yellow' : 'red'}`} />
+            <span className="smart-led-bulb" />
             <span className="smart-led-base" />
           </div>
           <div className="smartled-stage-copy" aria-live="polite">

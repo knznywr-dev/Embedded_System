@@ -69,7 +69,7 @@ async function main() {
       mobile: view === 'mobile',
     });
     for (const [name, route] of routes) {
-      await send('Page.navigate', { url: `http://localhost:4173/#${route}` });
+      await send('Page.navigate', { url: `http://localhost:4173/?t=${Date.now()}#${route}` });
       await wait(1200);
       await send('Runtime.evaluate', { expression: 'window.scrollTo(0,0)' });
       await wait(200);

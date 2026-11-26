@@ -64,10 +64,12 @@ src/
   pages/            Dashboard, Notes, Concept Lab, Flashcards, Quiz,
                     Formula Practice, Progress
   state/            React context with local-storage persistence and cross-tab sync
-  styles/           Light academic-tech design system; responsive and reduced-motion safe
+  styles/           Light academic-tech design system; tokens, motion, responsive rules
 ```
 
 Academic data is separated from UI so answers and page references stay auditable. Quiz answers are never shown before submission: either feedback is held until the end (default), or a self-paced question must be submitted before its own feedback appears. There is no invented exam timer.
+
+The interface uses one shared token layer (colour, spacing, radii, shadows, type scale, motion), subtle page/section entrances, hover and press feedback, and compact mobile navigation. All motion is CSS-only and is disabled under `prefers-reduced-motion`. There are no external fonts, images, or UI libraries.
 
 ## Tests
 
@@ -87,8 +89,8 @@ Verified results at build time:
 Test Files  5 passed (5)
 Tests       50 passed (50)
 Build       73 modules transformed
-CSS         117.07 kB (19.41 kB gzip)
-JS          493.40 kB (136.39 kB gzip)
+CSS         165.11 kB (23.35 kB gzip)
+JS          493.89 kB (136.49 kB gzip)
 ```
 
 ## Accessibility and privacy
